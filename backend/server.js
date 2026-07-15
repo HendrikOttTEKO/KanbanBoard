@@ -29,11 +29,19 @@ app.get("/api/tasks", (req, res) => {
 });
 
 app.post("/api/tasks", (req, res) => {
+  const { title, status, priority } = req.body;
+
+  if (!title || title.trim() === "") {
+    return res.status(400).json({
+      message: "Der Titel ist ein Pflichtfeld.",
+    });
+  }
+
   const newTask = {
     id: tasks.length + 1,
-    title: req.body.title,
-    status: req.body.status,
-    priority: req.body.priority,
+    title: title.trim(),
+    status: status || "To Do",
+    priority: priority || "Mittel",
   };
 
   tasks.push(newTask);
