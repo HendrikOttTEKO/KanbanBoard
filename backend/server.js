@@ -2,13 +2,13 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
+const Board = require("./models/Board");
+const Column = require("./models/Column");
+const Task = require("./models/Task");
 
 const app = express();
 const PORT = 3000;
 app.use(cors());
-app.use(express.json());
-
-// Erlaubt dem Server, JSON-Daten aus Anfragen zu lesen.
 app.use(express.json());
 
 // Vorläufige Aufgaben im Arbeitsspeicher.
