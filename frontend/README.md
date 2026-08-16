@@ -1,3 +1,3 @@
-# Frontend
+# KanbanBoard
 
-React-Benutzeroberfläche des Kanban Boards.
+Ein Projekt von Hedrik und Yaser
