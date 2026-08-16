@@ -1,7 +1,12 @@
 const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+require("dotenv").config();
 
 const app = express();
 const PORT = 3000;
+app.use(cors());
+app.use(express.json());
 
 // Erlaubt dem Server, JSON-Daten aus Anfragen zu lesen.
 app.use(express.json());
@@ -120,6 +125,15 @@ app.delete("/api/tasks/:id", (req, res) => {
 });
 
 // Server starten.
-app.listen(PORT, () => {
-  console.log(`Server läuft auf http://localhost:${PORT}`);
-});
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log("MongoDB verbunden ✅");
+
+    app.listen(PORT, () => {
+      console.log(`Server läuft auf http://localhost:${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.error("MongoDB Verbindung fehlgeschlagen:", error.message);
+  });
