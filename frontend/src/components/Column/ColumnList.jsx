@@ -3,7 +3,7 @@ import TaskCard from "../Task/TaskCard";
 
 const COLUMN_TITLES = ["To Do", "In Progress", "Done"];
 
-export default function ColumnList() {
+export default function ColumnList({ filterPriority }) {
   const { tasks } = useBoardContext();
 
   return (
@@ -14,6 +14,9 @@ export default function ColumnList() {
 
           {tasks
             .filter((task) => task.status === title)
+            .filter(
+              (task) => !filterPriority || task.priority === filterPriority,
+            )
             .map((task) => (
               <TaskCard key={task._id} task={task} />
             ))}
