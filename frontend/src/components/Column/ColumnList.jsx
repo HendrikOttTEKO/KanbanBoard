@@ -1,17 +1,21 @@
-import { useBoardContext } from '../../context/BoardContext';
-import TaskCard from '../Task/TaskCard';
+import { useBoardContext } from "../../context/BoardContext";
+import TaskCard from "../Task/TaskCard";
 
-const COLUMN_TITLES = ['To Do', 'In Progress', 'Done']; // placeholder
+const COLUMN_TITLES = ["To Do", "In Progress", "Done"];
 
-export default function ColumnList() {
+export default function ColumnList({ filterPriority }) {
   const { tasks } = useBoardContext();
 
+  const visibleTasks = filterPriority
+    ? tasks.filter((task) => task.priority === filterPriority)
+    : tasks;
+
   return (
-    <div style={{ display: 'flex', gap: '1rem' }}>
+    <div className="board-columns">
       {COLUMN_TITLES.map((title) => (
-        <div key={title} style={{ flex: 1, border: '1px solid #ccc', padding: '0.5rem' }}>
+        <div key={title} className="column">
           <h3>{title}</h3>
-          {tasks
+          {visibleTasks
             .filter((task) => task.status === title)
             .map((task) => (
               <TaskCard key={task._id} task={task} />
