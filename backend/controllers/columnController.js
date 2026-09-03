@@ -25,7 +25,7 @@ exports.createColumn = async (req, res) => {
 exports.updateColumn = async (req, res) => {
   try {
     const column = await Column.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
+      returnDocument: "after",
       runValidators: true,
     });
     if (!column)

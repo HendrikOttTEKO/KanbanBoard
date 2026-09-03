@@ -3,7 +3,8 @@ const Task = require("../models/Task");
 // READ: Alle Aufgaben abrufen
 exports.getTasks = async (req, res) => {
   try {
-    const tasks = await Task.find();
+    const filter = req.query.board ? { board: req.query.board } : {};
+    const tasks = await Task.find(filter);
     res.json(tasks);
   } catch (err) {
     res
@@ -27,7 +28,7 @@ exports.createTask = async (req, res) => {
 exports.updateTask = async (req, res) => {
   try {
     const task = await Task.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
+      returnDocument: "after",
       runValidators: true,
     });
     if (!task) return res.status(404).json({ message: "Task nicht gefunden" });

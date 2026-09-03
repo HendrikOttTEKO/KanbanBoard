@@ -1,4 +1,5 @@
 const Board = require("../models/Board");
+const Task = require("../models/Task");
 
 exports.getBoards = async (req, res) => {
   try {
@@ -37,7 +38,7 @@ exports.createBoard = async (req, res) => {
 exports.updateBoard = async (req, res) => {
   try {
     const board = await Board.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
+      returnDocument: "after",
       runValidators: true,
     });
     if (!board)
@@ -53,7 +54,12 @@ exports.deleteBoard = async (req, res) => {
     const board = await Board.findByIdAndDelete(req.params.id);
     if (!board)
       return res.status(404).json({ message: "Board nicht gefunden" });
-    res.json({ message: "Board wurde erfolgreich gelöscht" });
+
+    await Task.deleteMany({ board: req.params.id });
+
+    res.json({
+      message: "Board und zugehörige Aufgaben wurden erfolgreich gelöscht",
+    });
   } catch (err) {
     res
       .status(500)
