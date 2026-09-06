@@ -13,9 +13,16 @@ export default function TaskCard({ task }) {
   async function moveTask(newStatus) {
     try {
       const res = await updateTask(task._id, { status: newStatus });
+
       setTasks(tasks.map((t) => (t._id === task._id ? res.data : t)));
     } catch (err) {
-      console.error("Task konnte nicht verschoben werden", err);
+      console.log("Backend noch nicht verfügbar – Task wird lokal verschoben.");
+
+      setTasks(
+        tasks.map((t) =>
+          t._id === task._id ? { ...t, status: newStatus } : t,
+        ),
+      );
     }
   }
 
@@ -29,9 +36,12 @@ export default function TaskCard({ task }) {
       <strong>{task.title}</strong>
       <p>{task.description}</p>
       <small>Priorität: {task.priority}</small>
+
       <div>
         <button onClick={() => moveTask("To Do")}>To Do</button>
+
         <button onClick={() => moveTask("In Progress")}>In Progress</button>
+
         <button onClick={() => moveTask("Done")}>Done</button>
       </div>
     </div>
