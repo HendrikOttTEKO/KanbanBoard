@@ -122,7 +122,7 @@ export default function HomePage() {
         <p>Noch keine Boards vorhanden. Erstelle dein erstes Board oben.</p>
       )}
 
-      <div className="board-columns">
+      <div className="boards-grid">
         {sortedBoards.map((board, index) =>
           editingId === board._id ? (
             <div key={board._id} className="board-card">
