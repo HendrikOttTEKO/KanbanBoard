@@ -34,10 +34,34 @@
   margin-bottom: 1rem;
 }
 
+.board-columns .column:nth-child(1) {
+  background-color: #f4f0ff;
+}
+
+.board-columns .column:nth-child(1) h3 {
+  color: #5e4db2;
+}
+
+.board-columns .column:nth-child(2) {
+  background-color: #fff8e6;
+}
+
+.board-columns .column:nth-child(2) h3 {
+  color: #9a6700;
+}
+
+.board-columns .column:nth-child(3) {
+  background-color: #eefaf3;
+}
+
+.board-columns .column:nth-child(3) h3 {
+  color: #216e4e;
+}
+
 .task-card {
   background-color: white;
   border-radius: 10px;
-  padding: 1rem;
+  padding: 0.8rem;
   margin-bottom: 0.75rem;
   box-shadow: 0 2px 6px rgba(9, 30, 66, 0.12);
 }
@@ -51,8 +75,8 @@
 
 .task-card p {
   color: #5e6c84;
-  font-size: 0.9rem;
-  margin: 0.3rem 0 0.7rem;
+  font-size: 0.85rem;
+  margin: 0.2rem 0 0.45rem;
 }
 
 .task-card small {
@@ -63,9 +87,10 @@
 }
 
 .task-card button {
-  font-size: 0.75rem;
-  padding: 0.4rem 0.65rem;
-  margin-right: 0.35rem;
+  font-size: 0.7rem;
+  padding: 0.3rem 0.5rem;
+  margin-right: 0.25rem;
+  margin-bottom: 0.25rem;
   border: 1px solid #dfe1e6;
   background-color: white;
   border-radius: 6px;
@@ -76,15 +101,37 @@
   background-color: #ebecf0;
 }
 
-@media (max-width: 800px) {
-  .board-columns {
-    flex-direction: column;
-  }
-
-  .column {
-    width: 100%;
-  }
+.priority-badge {
+  display: inline-block;
+  padding: 0.08rem 0.28rem;
+  margin-bottom: 0.4rem;
+  border-radius: 3px;
+  font-size: 0.55rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: 1px solid;
+  line-height: 1.2;
 }
+
+.priority-hoch {
+  color: #c9372c;
+  background-color: #ffebe6;
+  border-color: #ff8f73;
+}
+
+.priority-medium {
+  color: #a54800;
+  background-color: #fff7d6;
+  border-color: #f5cd47;
+}
+
+.priority-niedrig {
+  color: #1f7a4d;
+  background-color: #dcfff1;
+  border-color: #7ee2b8;
+}
+
+/* TASK-FORMULAR */
 
 .task-form {
   display: flex;
@@ -150,7 +197,71 @@
   font-size: 0.85rem;
 }
 
+.board-card {
+  background-color: white;
+  border: 1px solid #dfe3e8;
+  border-radius: 12px;
+  padding: 1rem;
+  min-width: 0;
+  box-shadow: 0 2px 6px rgba(9, 30, 66, 0.08);
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.board-card:hover {
+  background-color: #f7f9fc;
+  border-color: #b8c4d6;
+  box-shadow: 0 4px 10px rgba(9, 30, 66, 0.12);
+}
+
+.boards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  align-items: stretch;
+}
+
+.boards-grid .board-card:nth-child(6n + 1) {
+  background-color: #eaf4ff; /* hellblau */
+}
+
+.boards-grid .board-card:nth-child(6n + 2) {
+  background-color: #fff0f6; /* hellrosa */
+}
+
+.boards-grid .board-card:nth-child(6n + 3) {
+  background-color: #fffbe6; /* hellgelb */
+}
+
+.boards-grid .board-card:nth-child(6n + 4) {
+  background-color: #e9fbf8; /* helltürkis */
+}
+
+.boards-grid .board-card:nth-child(6n + 5) {
+  background-color: #f4e9df; /* hellbraun / beige */
+}
+
+.boards-grid .board-card:nth-child(6n + 6) {
+  background-color: #eee9ff; /* hellviolett */
+}
+
+@media (max-width: 900px) {
+  .boards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 800px) {
+  .board-columns {
+    flex-direction: column;
+  }
+
+  .column {
+    width: 100%;
+  }
+
   .task-form {
     flex-direction: column;
     align-items: stretch;
@@ -162,16 +273,34 @@
   }
 }
 
-.board-card {
-  background-color: #f1f2f4;
-  border: 2px solid #dfe1e6;
-  border-radius: 12px;
-  padding: 1rem;
-  flex: 1;
-  min-width: 260px;
-  transition: border-color 0.15s ease;
+@media (max-width: 600px) {
+  .boards-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
-.board-card:hover {
-  border-color: #0c66e4;
+.due-date {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 0.72rem;
+  color: #5e6c84;
+}
+
+.date-field {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 0.75rem;
+  border: 1px solid #dfe1e6;
+  border-radius: 6px;
+  background-color: white;
+  color: #5e6c84;
+  font-size: 0.9rem;
+}
+
+.date-field input {
+  border: none;
+  padding: 0.65rem 0;
+  outline: none;
+  background: transparent;
 }

@@ -1,6 +1,15 @@
 import { useState } from "react";
 import { createTask } from "../../api/taskService";
 import { useBoardContext } from "../../context/BoardContext";
+function getTodayDate() {
+  const today = new Date();
+
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const day = String(today.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+}
 
 export default function TaskForm() {
   const { board, tasks, setTasks } = useBoardContext();
@@ -8,6 +17,7 @@ export default function TaskForm() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState("Medium");
+  const [dueDate, setDueDate] = useState(getTodayDate());
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
 
@@ -15,6 +25,7 @@ export default function TaskForm() {
     e.preventDefault();
 
     if (title.trim() === "") {
+      setError("Bitte einen Titel eingeben.");
       return;
     }
 
@@ -26,6 +37,7 @@ export default function TaskForm() {
         title: title.trim(),
         description: description.trim(),
         priority,
+        dueDate: dueDate || null,
         board: board._id,
       });
 
@@ -34,6 +46,7 @@ export default function TaskForm() {
       setTitle("");
       setDescription("");
       setPriority("Medium");
+      setDueDate(getTodayDate());
     } catch (err) {
       setError("Aufgabe konnte nicht erstellt werden.");
       console.error(err);
@@ -58,6 +71,16 @@ export default function TaskForm() {
         onChange={(e) => setDescription(e.target.value)}
       />
 
+      <label className="date-field">
+        <span>Datum</span>
+
+        <input
+          type="date"
+          value={dueDate}
+          min={getTodayDate()}
+          onChange={(e) => setDueDate(e.target.value)}
+        />
+      </label>
       <select value={priority} onChange={(e) => setPriority(e.target.value)}>
         <option value="Hoch">Hoch</option>
         <option value="Medium">Medium</option>
